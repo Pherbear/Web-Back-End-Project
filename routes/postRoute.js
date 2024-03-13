@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const Blog = require('../model/blog');
+const Post = require('../model/post');
 
 
 
 router.post('/', async (req, res)=>{
-    const blog = new Blog(req.body)
+    const post = new Post(req.body)
     try{
-        await blog.save()
-        res.status(201).send(blog)
+        await post.save()
+        res.status(201).send(post)
     } catch(error){
         res.status(500).send(error)
     }
@@ -18,7 +18,7 @@ router.post('/', async (req, res)=>{
 
 router.get('/', async (req, res)=>{
     try{
-        const blogs = await Blog.find({})
+        const blogs = await Post.find({})
         res.status(200).send(blogs)
     }catch(error){
         res.status(500).send(error)
@@ -28,11 +28,11 @@ router.get('/', async (req, res)=>{
 
 router.delete('/:id', async (req, res) => {
     try{
-        const blog = await Blog.findByIdAndDelete(req.params.id)
-        if(!blog){
+        const post = await Post.findByIdAndDelete(req.params.id)
+        if(!post){
             res.status(404).send()
         }
-        res.send(blog)
+        res.send(post)
         
     }catch(error){
         res.status(500).send(error)
@@ -41,11 +41,11 @@ router.delete('/:id', async (req, res) => {
 
 router.patch('/:id', async (req, res) => {
     try{
-        const blog = await Blog.findByIdAndUpdate(req.params.id, req.body, {new:true})
-        if(!blog){
+        const post = await Post.findByIdAndUpdate(req.params.id, req.body, {new:true})
+        if(!post){
             res.status(404).send()
         }
-        res.status(200).send(blog)
+        res.status(200).send(post)
         
     }catch(error){
         res.status(500).send(error)
