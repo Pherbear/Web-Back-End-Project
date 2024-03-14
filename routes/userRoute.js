@@ -4,6 +4,7 @@ const User = require('../model/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+// Register new user 
 router.post("/register", async (req, res) => {
     try{
         const newPassword = await bcrypt.hash(req.body.password, 10)
@@ -20,6 +21,7 @@ router.post("/register", async (req, res) => {
     }
 })
 
+// User login
 router.post('/login', async (req, res) => {
     const user = await User.findOne({
         email: req.body.email
@@ -50,6 +52,7 @@ router.post('/login', async (req, res) => {
 
 })
 
+// Adding a qoute to user
 router.post("/quote", async (req, res) => {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
@@ -78,5 +81,9 @@ router.post("/quote", async (req, res) => {
         return res.json({status:'error', error:'Invalid Token'})
     }
 })
+
+// Creating a new post for user 
+
+// Adding a comment to a post 
 
 module.exports = router;
