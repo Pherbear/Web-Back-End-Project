@@ -28,6 +28,8 @@ mongoose
 
 
 
-  app.use('/blogs', postRoutes);
+  app.use('/posts', postRoutes);
   app.use('/api/user', userRoutes);
   app.use('/api/admin', adminRoutes);
+  //app.use('/api/viewer', viewerRoutes);
+  //app.use('/comment', commentRoutes)
