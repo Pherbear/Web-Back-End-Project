@@ -85,5 +85,26 @@ router.post("/quote", async (req, res) => {
 // Creating a new post for user 
 
 // Adding a comment to a post 
+router.post('/', async (req, res) => {
+    const {postId} = req.params;
+    const comment = new Comment(req.body);
+    if(!comment)
+    {
+        return res.status(400).json({error: 'Comment is required'})
+    }
+    
+    const post = post.find(post => post_id === postId);
+    if(!post)
+    {
+        return res.status(404).json({error: 'Post not found'})
+    }
+    
+    const newComment = {
+        id: user_id,
+        comment,
+        createdAt: new Date()
+    };
+    res.status(201).json(newComment)
+})
 
 module.exports = router;

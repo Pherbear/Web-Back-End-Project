@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
 
 const commentSchema = new mongoose.Schema({
-    user_id: {type: Integer, required: true},
-    post_id: {type: Integer, required: true},
+    user_id: {type: Number, required: true},
+    post_id: {type: Number, required: true},
     body: {type: String, required: true}
 },{
     collection: 'comments'

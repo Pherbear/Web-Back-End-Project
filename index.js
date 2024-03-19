@@ -9,6 +9,7 @@ const express = require("express");
 const postRoutes = require('./routes/postRoute');
 const userRoutes = require('./routes/userRoute');
 const adminRoutes = require('./routes/adminRoute');
+const commentRoutes = require('./routes/commentRoute')
 
 
 const app = express();
@@ -32,4 +33,4 @@ mongoose
   app.use('/api/user', userRoutes);
   app.use('/api/admin', adminRoutes);
   //app.use('/api/viewer', viewerRoutes);
-  //app.use('/comment', commentRoutes)
+  app.use('/comments', commentRoutes)
