@@ -18,8 +18,8 @@ router.post('/', async (req, res)=>{
 
 router.get('/', async (req, res)=>{
     try{
-        const blogs = await Post.find({})
-        res.status(200).send(blogs)
+        const post = await Post.find({})
+        res.status(200).send(post)
     }catch(error){
         res.status(500).send(error)
     }
