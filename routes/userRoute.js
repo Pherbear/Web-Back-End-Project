@@ -83,6 +83,31 @@ router.post("/quote", async (req, res) => {
 })
 
 // Creating a new post for user 
+router.post("/user_id/posts", async (req, res) => {
+    const { user_id } = req.params;
+
+    try {
+        // Find the user by user_id
+        const user = await User.findById(user_id);
+        if (!user) {
+            return res.status(404).json({ status: 'error', error: 'User not found' });
+        }
+
+        // Create the new post
+        const newPost = {
+            title: req.body.title,
+            subTitle: req.body.subTitle,
+            description: req.body.description
+        };
+        user.posts.push(newPost);
+        await user.save();
+
+        res.status(201).json({ status: 'Ok', message: 'Post created successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ status: 'error', error: 'Server error' });
+    }
+})
 
 // Adding a comment to a post 
 router.post('/', async (req, res) => {
