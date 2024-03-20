@@ -52,84 +52,178 @@ router.post('/login', async (req, res) => {
 
 })
 
-// // Adding a post to user
-// router.post("/post", async (req, res) => {
-//     const authHeader = req.headers['authorization']
-//     const token = authHeader && authHeader.split(' ')[1]
+// Creating a new post for user(only for authorized user)
+router.post('/post', async (req, res) => {
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
 
-//     console.log(token)
-//     if (token == null) return res.sendStatus(401)
+    if (token == null) return res.sendStatus(401)
 
-//     try{
-//         const decoded = jwt.verify(token, 'secret123')
+    try{
+        const decoded = jwt.verify(token, 'secret123')
 
-//         const user = await User.findOne({
-//             email: decoded.email
-//         })
+        const user = await User.findOne({
+            email: decoded.email
+        })
 
-//         if(!user){
-//             return res.json({status:'error', error:'Not a authorized User'})
-//         }
-
-//         await User.updateOne(
-//             {email: decoded.email},
-//             {$set: {post: req.body.post}}
-//             )
-        
-//         return res.json({status: 'Ok'})
-//     }catch(error){
-//         return res.json({status:'error', error:'Invalid Token'})
-//     }
-// })
-
-// Creating a new post for user 
-router.post("/user_id/posts", async (req, res) => {
-    const { user_id } = req.params;
-
-    try {
-        // Find the user by user_id
-        const user = await User.findById(user_id);
-        if (!user) {
-            return res.status(404).json({ status: 'error', error: 'User not found' });
+        if(!user){
+            return res.json({status:'error', error:'Not a authorized User'})
         }
 
-        // Create the new post
-        const newPost = {
-            title: req.body.title,
-            subTitle: req.body.subTitle,
-            description: req.body.description
-        };
-        user.posts.push(newPost);
-        await user.save();
-
-        res.status(201).json({ status: 'Ok', message: 'Post created successfully' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ status: 'error', error: 'Server error' });
+        await User.updateOne(
+            {email: decoded.email},
+            {$set: {post: req.body.post}}
+            )
+        
+        return res.json({status: 'Ok'})
+    }catch(error){
+        return res.json({status:'error', error:'Invalid Token'})
     }
 })
 
-// Adding a comment to a post 
-router.post('/', async (req, res) => {
-    const {postId} = req.params;
-    const comment = new Comment(req.body);
-    if(!comment)
-    {
-        return res.status(400).json({error: 'Comment is required'})
+// edit a specific post from user (only for authorized user)
+router.put('/post/:id', async (req, res) => {
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
+
+    if (token == null) return res.sendStatus(401)
+
+    try{
+        const decoded = jwt.verify(token, 'secret123')
+
+        const user = await User.findOne({
+            email: decoded.email
+        })
+
+        if(!user){
+            return res.json({status:'error', error:'Not a authorized User'})
+        }
+
+        await User.updateOne(
+            {email: decoded.email},
+            {$set: {post: req.body.post}}
+            )
+        
+        return res.json({status: 'Ok'})
+    }catch(error){
+        return res.json({status:'error', error:'Invalid Token'})
     }
-    
-    const post = post.find(post => post_id === postId);
-    if(!post)
-    {
-        return res.status(404).json({error: 'Post not found'})
+})
+
+// delete a specific post from user (only for authorized user)
+router.delete('/post/:id', async (req, res) => {
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
+
+    if (token == null) return res.sendStatus(401)
+
+    try{
+        const decoded = jwt.verify(token, 'secret123')
+
+        const user = await User.findOne({
+            email: decoded.email
+        })
+
+        if(!user){
+            return res.json({status:'error', error:'Not a authorized User'})
+        }
+
+        await User.updateOne(
+            {email: decoded.email},
+            {$set: {post: req.body.post}}
+            )
+        
+        return res.json({status: 'Ok'})
+    }catch(error){
+        return res.json({status:'error', error:'Invalid Token'})
     }
-    
-    const newComment = {
-        id: user_id,
-        comment,
-        createdAt: new Date()
-    };
-    res.status(201).json(newComment)
+})
+
+// comment on a specific post from user (only for authorized user)
+router.post('/comment', async (req, res) => {
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
+
+    if (token == null) return res.sendStatus(401)
+
+    try{
+        const decoded = jwt.verify(token, 'secret123')
+
+        const user = await User.findOne({
+            email: decoded.email
+        })
+
+        if(!user){
+            return res.json({status:'error', error:'Not a authorized User'})
+        }
+
+        await User.updateOne(
+            {email: decoded.email},
+            {$set: {comment: req.body.comment}}
+            )
+        
+        return res.json({status: 'Ok'})
+    }catch(error){
+        return res.json({status:'error', error:'Invalid Token'})
+    }
+})
+
+// edit a specific comment from user (only for authorized user)
+router.put('/comment/:id', async (req, res) => {
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
+
+    if (token == null) return res.sendStatus(401)
+
+    try{
+        const decoded = jwt.verify(token, 'secret123')
+
+        const user = await User.findOne({
+            email: decoded.email
+        })
+
+        if(!user){
+            return res.json({status:'error', error:'Not a authorized User'})
+        }
+
+        await User.updateOne(
+            {email: decoded.email},
+            {$set: {comment: req.body.comment}}
+            )
+        
+        return res.json({status: 'Ok'})
+    }catch(error){
+        return res.json({status:'error', error:'Invalid Token'})
+    }
+})
+
+// delete a specific comment from user (only for authorized user)
+router.delete('/comment/:id', async (req, res) => {
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
+
+    if (token == null) return res.sendStatus(401)
+
+    try{
+        const decoded = jwt.verify(token, 'secret123')
+
+        const user = await User.findOne({
+            email: decoded.email
+        })
+
+        if(!user){
+            return res.json({status:'error', error:'Not a authorized User'})
+        }
+
+        await User.updateOne(
+            {email: decoded.email},
+            {$set: {comment: req.body.comment}}
+            )
+        
+        return res.json({status: 'Ok'})
+    }catch(error){
+        return res.json({status:'error', error:'Invalid Token'})
+    }
 })
 
 module.exports = router;
