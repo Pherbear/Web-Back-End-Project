@@ -52,35 +52,35 @@ router.post('/login', async (req, res) => {
 
 })
 
-// Adding a qoute to user
-router.post("/quote", async (req, res) => {
-    const authHeader = req.headers['authorization']
-    const token = authHeader && authHeader.split(' ')[1]
+// // Adding a post to user
+// router.post("/post", async (req, res) => {
+//     const authHeader = req.headers['authorization']
+//     const token = authHeader && authHeader.split(' ')[1]
 
-    console.log(token)
-    if (token == null) return res.sendStatus(401)
+//     console.log(token)
+//     if (token == null) return res.sendStatus(401)
 
-    try{
-        const decoded = jwt.verify(token, 'secret123')
+//     try{
+//         const decoded = jwt.verify(token, 'secret123')
 
-        const user = await User.findOne({
-            email: decoded.email
-        })
+//         const user = await User.findOne({
+//             email: decoded.email
+//         })
 
-        if(!user){
-            return res.json({status:'error', error:'Not a authorized User'})
-        }
+//         if(!user){
+//             return res.json({status:'error', error:'Not a authorized User'})
+//         }
 
-        await User.updateOne(
-            {email: decoded.email},
-            {$set: {quote: req.body.quote}}
-            )
+//         await User.updateOne(
+//             {email: decoded.email},
+//             {$set: {post: req.body.post}}
+//             )
         
-        return res.json({status: 'Ok'})
-    }catch(error){
-        return res.json({status:'error', error:'Invalid Token'})
-    }
-})
+//         return res.json({status: 'Ok'})
+//     }catch(error){
+//         return res.json({status:'error', error:'Invalid Token'})
+//     }
+// })
 
 // Creating a new post for user 
 router.post("/user_id/posts", async (req, res) => {

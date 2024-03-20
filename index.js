@@ -10,13 +10,12 @@ const postRoutes = require('./routes/postRoute');
 const userRoutes = require('./routes/userRoute');
 const adminRoutes = require('./routes/adminRoute');
 const commentRoutes = require('./routes/commentRoute')
-
+const viewerRoutes = require('./routes/viewerRoute')
 
 const app = express();
 app.use(express.json())
 
 const dbURI = process.env.DB_URI;
-
 
 mongoose
   .connect(dbURI)
@@ -27,10 +26,8 @@ mongoose
   )
   .catch((error) => console.log(error));
 
-
-
   app.use('/posts', postRoutes);
   app.use('/api/user', userRoutes);
   app.use('/api/admin', adminRoutes);
-  //app.use('/api/viewer', viewerRoutes);
+  app.use('/api/viewer', viewerRoutes);
   app.use('/comments', commentRoutes)

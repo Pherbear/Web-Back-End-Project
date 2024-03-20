@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const Comment = require('../model/comment');
 
+
+
 //POST (/${user_id}/posts) (body: post body) (authentication: user token)
 
 router.post('/:id', (req, res) => {
