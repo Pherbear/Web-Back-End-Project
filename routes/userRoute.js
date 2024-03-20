@@ -137,8 +137,9 @@ router.delete('/post/:id', async (req, res) => {
             return res.json({ status: 'error', error: 'Not a authorized User' });
         }
 
-        const post = await Post.findById(req.params.id);
-
+        
+        const post = await Post.findOne({_id: req.params.id});
+        
         if (!post) {
             return res.json({ status: 'error', error: 'Post not found' });
         }
@@ -146,12 +147,12 @@ router.delete('/post/:id', async (req, res) => {
         if (post.userId.toString() !== user._id.toString()) {
             return res.json({ status: 'error', error: 'Not a authorized User' });
         }
-
-        await post.remove();
+  
+        await Post.deleteOne({_id: req.params.id})
 
         return res.json({ status: 'Ok', post });
     } catch (error) {
-        return res.json({ status: 'error', error: 'Invalid Token' });
+        return res.json({ status: 'error', error: error });
     }
 });
 
