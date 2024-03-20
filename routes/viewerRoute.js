@@ -21,7 +21,7 @@ router.get("/posts/:postId", async (req, res) => {
         if (!post) {
             return res.status(404).json({status: 'error', error: 'Post not found'});
         }
-        const comments = await Comment.find({post_id: postId});
+        const comments = await Comment.find({postId: postId});
         res.status(200).json({status: 'Ok', data: {post, comments}});
     } catch (err) {
         res.status(500).json({status: 'error', error: 'Server error'});
