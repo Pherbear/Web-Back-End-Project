@@ -29,7 +29,7 @@ router.post('/login', async (req, res) => {
         email: req.body.email
     })
 
-    if(!user){
+    if (!user){
         return res.json({status: 'error', error: 'Invalid Login'})
     }
 
@@ -69,6 +69,10 @@ router.post('/post', async (req, res) => {
             return res.json({ status: 'error', error: 'Not a authorized User' });
         }
 
+        if (user.status == 'banned') {
+            return res.json({ status: 'error', error: 'User is banned'})
+        }
+
         const post = new Post({
             userId: user._id,
             title: req.body.title,
@@ -98,6 +102,10 @@ router.put('/post/:id', async (req, res) => {
 
         if (!user) {
             return res.json({ status: 'error', error: 'Not a authorized User' });
+        }
+
+        if (user.status == 'banned') {
+            return res.json({ status: 'error', error: 'User is banned'})
         }
 
         const post = await Post.findById(req.params.id);
@@ -137,7 +145,10 @@ router.delete('/post/:id', async (req, res) => {
             return res.json({ status: 'error', error: 'Not a authorized User' });
         }
 
-        
+        if (user.status == 'banned') {
+            return res.json({ status: 'error', error: 'User is banned'})
+        }
+
         const post = await Post.findOne({_id: req.params.id});
         
         if (!post) {
@@ -171,6 +182,10 @@ router.get('/post', async (req, res) => {
             return res.json({ status: 'error', error: 'Not a authorized User' });
         }
 
+        if (user.status == 'banned') {
+            return res.json({ status: 'error', error: 'User is banned'})
+        }
+
         const posts = await Post.find({ userId: user._id });
 
         return res.json({ status: 'Ok', posts });
@@ -193,6 +208,10 @@ router.post('/comment', async (req, res) => {
 
         if (!user) {
             return res.status(404).json({ status: 'error', error: 'User not found' });
+        }
+
+        if (user.status == 'banned') {
+            return res.json({ status: 'error', error: 'User is banned'})
         }
 
         const comment = new Comment({
