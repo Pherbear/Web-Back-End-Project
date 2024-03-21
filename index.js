@@ -6,10 +6,10 @@ require('dotenv').config();
 const mongoose = require("mongoose");
 const express = require("express");
 
-// const postRoutes = require('./routes/postRoute');
+const postRoutes = require('./routes/postRoute');
 const userRoutes = require('./routes/userRoute');
 const adminRoutes = require('./routes/adminRoute');
-// const commentRoutes = require('./routes/commentRoute')
+const commentRoutes = require('./routes/commentRoute')
 const viewerRoutes = require('./routes/viewerRoute')
 
 const app = express();
@@ -26,8 +26,8 @@ mongoose
   )
   .catch((error) => console.log(error));
 
-  // app.use('/posts', postRoutes);
+  app.use('/post', postRoutes);
   app.use('/api/user', userRoutes);
   app.use('/api/admin', adminRoutes);
   app.use('/viewer', viewerRoutes);
-  // app.use('/comments', commentRoutes)
+  app.use('/comment', commentRoutes)

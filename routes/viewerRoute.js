@@ -62,6 +62,40 @@ router.get("/posts/:postId", async (req, res) => {
     }
 });
 
+//get all posts from user with userID
+router.get("/posts/user/:userId", async(req, res) => {
+    const {userId} = req.params
+    try {
+        const user = await User.findOne({_id: userId})
+        if (!user) {
+            return res.status(404).json({status: 'error', error: 'User not found'});
+        }
+        const posts = await Post.find({userId: userId})
+        if(!posts) {
+            return res.status(404).json({status: 'error', error: 'Comments not found'});
+        }
+        res.status(200).json({status: 'Ok', data: posts});
+    } catch (error) {
+        res.status(500).json({status: 'error', error: 'Server error'})
+    }
+})
+
+//get specific comment with commentId
+router.get("/comments/:commentId", async (req, res) => {
+    const {commentId} = req.params
+
+    try {
+        const comment = await Comment.findOne({_id: commentId})
+        if(!comment) {
+            return res.status(404).json({status: 'error', error: 'Comment not found'});
+        }
+        res.status(200).json({status: 'Ok', data: comment});
+    } catch (error) {
+        res.status(500).json({status: 'error', error: 'Server error'})
+    }
+})
+
+//get all comments from user with userId
 router.get("/comments/user/:userId", async (req, res) => {
     const {userId} = req.params
 
@@ -75,23 +109,6 @@ router.get("/comments/user/:userId", async (req, res) => {
             return res.status(404).json({status: 'error', error: 'Comments not found'});
         }
         res.status(200).json({status: 'Ok', data: comments});
-    } catch (error) {
-        res.status(500).json({status: 'error', error: 'Server error'})
-    }
-})
-
-router.get("/posts/user/:userId", async(req, res) => {
-    const {userId} = req.params
-    try {
-        const user = await User.findOne({_id: userId})
-        if (!user) {
-            return res.status(404).json({status: 'error', error: 'User not found'});
-        }
-        const posts = await Post.find({userId: userId})
-        if(!posts) {
-            return res.status(404).json({status: 'error', error: 'Comments not found'});
-        }
-        res.status(200).json({status: 'Ok', data: posts});
     } catch (error) {
         res.status(500).json({status: 'error', error: 'Server error'})
     }

@@ -53,6 +53,7 @@ router.post('/login', async (req, res) => {
 
 })
 
+//bans user from setting their status to 'banned'
 router.put('/ban/:userId', async (req, res) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
@@ -85,6 +86,7 @@ router.put('/ban/:userId', async (req, res) => {
     }
 })
 
+//unbans user by setting their status to 'unbanned'
 router.put('/unban/:userId', async (req, res) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
