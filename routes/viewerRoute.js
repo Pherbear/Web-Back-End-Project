@@ -62,4 +62,39 @@ router.get("/posts/:postId", async (req, res) => {
     }
 });
 
+router.get("/comments/user/:userId", async (req, res) => {
+    const {userId} = req.params
+
+    try {
+        const user = await User.findOne({_id: userId})
+        if (!user) {
+            return res.status(404).json({status: 'error', error: 'User not found'});
+        }
+        const comments = await Comment.find({userId: userId})
+        if(!comments) {
+            return res.status(404).json({status: 'error', error: 'Comments not found'});
+        }
+        res.status(200).json({status: 'Ok', data: comments});
+    } catch (error) {
+        res.status(500).json({status: 'error', error: 'Server error'})
+    }
+})
+
+router.get("/posts/user/:userId", async(req, res) => {
+    const {userId} = req.params
+    try {
+        const user = await User.findOne({_id: userId})
+        if (!user) {
+            return res.status(404).json({status: 'error', error: 'User not found'});
+        }
+        const posts = await Post.find({userId: userId})
+        if(!posts) {
+            return res.status(404).json({status: 'error', error: 'Comments not found'});
+        }
+        res.status(200).json({status: 'Ok', data: posts});
+    } catch (error) {
+        res.status(500).json({status: 'error', error: 'Server error'})
+    }
+})
+
 module.exports = router;
