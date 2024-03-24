@@ -1,3 +1,4 @@
+//Each comment will have a post id, a unique user id, and the text the user wants to post
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
