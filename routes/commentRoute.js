@@ -1,3 +1,5 @@
+// This file has our API endpoints that deal with user comments
+// Users will be able to post and delete
 const express = require('express');
 const router = express.Router();
 const User = require('../model/user');
