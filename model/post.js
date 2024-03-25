@@ -6,6 +6,7 @@ const postSchema = new mongoose.Schema({
     title: String,
     subTitle: String,
     description: String,
+    created_at: {type: Date, default: Date.now()}
 })
 
 const Post = new mongoose.model('Post', postSchema)
