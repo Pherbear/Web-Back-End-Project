@@ -1,4 +1,4 @@
-// The API endpoints for users to register a new account and login 
+// The API endpoints for users to register a new account, login, add and remove friends
 const express = require('express');
 const router = express.Router();
 const User = require('../model/user');
@@ -55,6 +55,7 @@ router.post('/login', async (req, res) => {
 
 })
 
+//user can add friends
 router.post('/add/:userId', async (req, res) => {
     const {userId} = req.params
     const authHeader = req.headers['authorization'];
@@ -98,6 +99,7 @@ router.post('/add/:userId', async (req, res) => {
     }
 })
 
+//user can remove friends 
 router.post('/unadd/:userId', async (req, res) => {
     const {userId} = req.params
     const authHeader = req.headers['authorization'];
