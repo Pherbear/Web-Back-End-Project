@@ -5,7 +5,8 @@ const Schema = mongoose.Schema;
 const commentSchema = new mongoose.Schema({
     postId: { type: Schema.Types.ObjectId, ref: 'Post' },
     userId: { type: Schema.Types.ObjectId, ref: 'User' },
-    body: {type: String, required: true}
+    body: {type: String, required: true},
+    created_at: {type: Date, default: Date.now()}
 },{
     collection: 'comments'
 }   

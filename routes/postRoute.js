@@ -121,5 +121,40 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+router.get('/friends', async(req, res) => {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+
+    if (token == null) return res.sendStatus(401);
+
+    try {
+        const decoded = jwt.verify(token, 'secret123');
+        const user = await User.findOne({ email: decoded.email });
+
+        if (!user) {
+            return res.json({ status: 'error', error: 'Not a authorized User' });
+        }
+
+        if (user.status == 'banned') {
+            return res.json({ status: 'error', error: 'User is banned'})
+        }
+
+        const friends = user.friends
+
+        const posts = await Post.find({
+            userId: {$in : friends}
+        }).sort({created_at: -1}).limit(10)
+
+        if (posts.length == 0) {
+            return res.json({status: 'error', error: 'no posts found'})
+        }
+
+        return res.json({ status: 'ok', posts})
+
+    } catch (error) {
+        return res.json({ status: 'error', error: error });
+    }
+})
+
 
 module.exports = router;
