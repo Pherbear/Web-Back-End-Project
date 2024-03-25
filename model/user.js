@@ -1,3 +1,5 @@
+//For this user schema name, email, and password will be used for login
+// status is for whehter the user is banned or not 
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 

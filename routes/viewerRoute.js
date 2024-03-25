@@ -1,3 +1,5 @@
+// The viewer role will be able to get all posts, will have the ability to serch posts and comments
+// They be able to use user or comment id for thier search
 const express = require('express');
 const router = express.Router();
 const Post = require('../model/post');

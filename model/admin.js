@@ -1,3 +1,4 @@
+//Admin will have to login with their name, email, and password
 const mongoose = require('mongoose')
 
 const adminSchema = new mongoose.Schema({

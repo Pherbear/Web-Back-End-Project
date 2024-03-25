@@ -1,3 +1,5 @@
+// This file contains the post API endpoints
+// Users will be able to post, edit, delete thier post 
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');

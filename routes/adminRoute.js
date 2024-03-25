@@ -1,3 +1,5 @@
+// This file will have all the admin API endpoints 
+// Features like register (for account), login, banning/unbanning users
 const express = require('express');
 const router = express.Router();
 const Admin = require('../model/admin');

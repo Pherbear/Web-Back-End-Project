@@ -1,3 +1,4 @@
+//Each post will have an entry for title, subtitle field, and the description will be the main text 
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 

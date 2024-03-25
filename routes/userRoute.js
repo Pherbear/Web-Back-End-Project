@@ -1,3 +1,4 @@
+// The API endpoints for users to register a new account and login 
 const express = require('express');
 const router = express.Router();
 const User = require('../model/user');
