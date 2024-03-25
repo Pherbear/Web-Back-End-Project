@@ -10,6 +10,8 @@ const User = require('../model/user');
 router.get("/posts", async (req, res) => {
     try {
         const posts = await Post.find();
+
+        //creating a map to make it easier to find names of users
         const map = new Map()
         let new_posts = []
         let index = 0
@@ -24,6 +26,8 @@ router.get("/posts", async (req, res) => {
             }
             new_posts.push({...post._doc, name: username})
         }
+
+
         res.status(200).json({status: 'Ok', data: new_posts});
     } catch (err) {
         res.status(500).json({status: 'error', error: 'Server error'});
@@ -46,6 +50,8 @@ router.get("/posts/:postId", async (req, res) => {
 
         const comments = await Comment.find({postId: postId});
         let new_comments = []
+
+        //creating a map to make it easier to find user names of ids
         let username_map = new Map()
         for (const comment of comments) {
             let comment_username
@@ -58,6 +64,7 @@ router.get("/posts/:postId", async (req, res) => {
             }
             new_comments.push({...comment._doc, name: comment_username})
         }
+        
         res.status(200).json({status: 'Ok', data: {post: new_post, comments: new_comments}});
     } catch (err) {
         res.status(500).json({status: 'error', error: 'Server error'});
